@@ -1,6 +1,14 @@
-# EchoNet-Triage
-An offline-first, near-ultrasonic mesh network for zero connectivity crisis triage.
-This is the opening block for your actual README file. It needs to instantly hook the judges reading your code.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/RohithKumar086/EchoNet-Triage/main/assets/logo%20ECho%20net.png" width="150" height="150"/>
+  
+  <h1>EchoNet-Triage</h1>
+  
+  <p><b>An offline-first, near-ultrasonic mesh network for zero connectivity crisis triage.</b></p>
+
+
+  <br/>
+
+</div>
 
 EchoNet-Triage is an offline-first, decentralized mobile communication protocol designed for rapid crisis response in the hospitality sector. When traditional cellular networks and local Wi-Fi infrastructure fail, [Repo Name] utilizes near-ultrasonic frequencies (18kHz–22kHz) to transmit localized, encrypted distress packets (SOS, medical needs, structural hazards) from device to device.
 

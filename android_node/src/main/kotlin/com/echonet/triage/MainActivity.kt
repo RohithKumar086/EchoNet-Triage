@@ -9,11 +9,20 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.echonet.triage.audio.FskEncoder
+import com.echonet.triage.audio.UltrasonicBroadcaster
 import com.echonet.triage.audio.UltrasonicListenerService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * ╔══════════════════════════════════════════════════════════════════╗
@@ -35,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_PERMISSIONS = 100
     }
 
+    private lateinit var tvLog: TextView
+    private lateinit var etCustomMessage: EditText
+    private val broadcaster = UltrasonicBroadcaster()
+
     // ── Broadcast receiver for decoded messages ─────────────────────
     private val messageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -45,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     ) ?: return
 
                     Log.i(TAG, "🔔 Received decoded message: \"$text\"")
+                    appendLog("📡 Received: \"$text\"")
                     Toast.makeText(
                         context,
                         "📡 Received: \"$text\"",
@@ -56,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                     val state = intent.getStringExtra(
                         UltrasonicListenerService.EXTRA_STATE
                     ) ?: return
+                    // appendLog("Decoder state → $state") // Optional: uncomment if you want chatty state logs
                     Log.d(TAG, "Decoder state → $state")
                 }
             }
@@ -68,16 +83,64 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         Log.i(TAG, """
             |╔══════════════════════════════════════════════════════════╗
-            |║          ECHONET-TRIAGE · Phase 3                       ║
-            |║          Mobile Node Initialization                     ║
+            |║          ECHONET-TRIAGE · Phase 4                       ║
+            |║          Mobile Node Transmitter                        ║
             |╚══════════════════════════════════════════════════════════╝
         """.trimMargin())
 
-        // Phase 3: No custom UI — just request permissions and start listening
+        setupUI()
         requestRequiredPermissions()
+    }
+
+    private fun setupUI() {
+        tvLog = findViewById(R.id.tvLog)
+        etCustomMessage = findViewById(R.id.etCustomMessage)
+
+        findViewById<Button>(R.id.btnSendSos).setOnClickListener {
+            transmitMessage("SOS!")
+        }
+
+        findViewById<Button>(R.id.btnSendCustom).setOnClickListener {
+            val msg = etCustomMessage.text.toString().trim()
+            if (msg.isNotEmpty()) {
+                transmitMessage(msg)
+                etCustomMessage.text.clear()
+            } else {
+                Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun transmitMessage(message: String) {
+        val cleanMsg = message.take(16).uppercase() // enforce max 16 chars as per config
+        appendLog("▶ Transmitting: \"$cleanMsg\" ...")
+        
+        lifecycleScope.launch(Dispatchers.Default) {
+            try {
+                // 1. Encode text to PCM audio array
+                val pcm16 = FskEncoder.encodeFsk(cleanMsg)
+                
+                // 2. Play audio using AudioTrack
+                broadcaster.broadcast(pcm16)
+                
+                withContext(Dispatchers.Main) {
+                    appendLog("✅ Broadcast complete: \"$cleanMsg\"")
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    appendLog("❌ Broadcast failed: ${e.message}")
+                }
+            }
+        }
+    }
+
+    private fun appendLog(line: String) {
+        val current = tvLog.text.toString()
+        tvLog.text = "$current\n$line"
     }
 
     override fun onResume() {

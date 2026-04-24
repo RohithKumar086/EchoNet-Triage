@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@android:drawable/ic_dialog_alert"
+        android:contentDescription="EchoNet Logo"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        app:tint="?attr/colorPrimary"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EchoNet Triage"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnSendSos"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="SEND SOS"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#D32F2F"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Or send a custom distress packet:"
+        android:layout_marginBottom="8dp"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/etCustomMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. FIRE, HELP, MEDIC"
+        android:inputType="textCapCharacters"
+        android:maxLength="16"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnSendCustom"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="SEND CUSTOM MESSAGE"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F5F5F5"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receiver Log:\n"
+            android:textSize="12sp"
+            android:fontFamily="monospace" />
+            
+    </ScrollView>
+
+</LinearLayout>

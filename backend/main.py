@@ -16,7 +16,7 @@ Endpoints:
 Test with curl:
     curl -X POST http://localhost:8000/api/sync \
       -H "Content-Type: application/json" \
-      -d '[{"id":"pkt-001","timestamp":1713700000,"loc":"12.97,77.59","msg":"SOS!","ttl":3}]'
+      -d '[{"id":"pkt-001","timestamp":1713700000,"loc":"12.9716,77.5946","msg":"SOS!","ttl":3}]'
 """
 
 from __future__ import annotations

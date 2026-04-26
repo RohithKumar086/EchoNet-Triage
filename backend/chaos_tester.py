@@ -13,15 +13,15 @@ API_URL = "http://localhost:8000/api/sync"
 NUM_PACKETS = 25
 DELAY_BETWEEN_REQUESTS = 0.5  # seconds (for the staggered "pop-pop" effect)
 
-# Center point for the map cluster (e.g., San Francisco)
-CENTER_LAT = 37.7749
-CENTER_LNG = -122.4194
+# Center point for the map cluster (Bengaluru, India)
+CENTER_LAT = 12.9716
+CENTER_LNG = 77.5946
 RADIUS_OFFSET = 0.02  # Roughly 1-2 km scatter radius
 
 MESSAGES = [
     "SOS!",
     "FIRE",
-    "MEDICAL",
+    "MEDIC",
     "TRAPPED",
     "WATER NEEDED",
     "ROAD BLOCKED",

@@ -1,8 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "leaflet/dist/leaflet.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════════════
+   ECHONET TRIAGE — PREMIUM DESIGN SYSTEM
+   Color Palette: Teal → Cyan → Blue → Violet → Fuchsia
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Global resets ────────────────────────────────────────────────── */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #060612;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #14b8a6, #8b5cf6);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2dd4bf, #a78bfa);
+}
 
 /* ── Reset Leaflet's default divIcon styling ──────────────────────── */
 .leaflet-div-icon {
@@ -10,36 +43,247 @@
   border: none !important;
 }
 
-/* ── High-tech pulsing marker ─────────────────────────────────────── */
+/* ── Pulsing distress marker — brand gradient ─────────────────────── */
 .pulse-marker {
-  width: 24px;
-  height: 24px;
-  background-color: rgba(239, 68, 68, 0.85);
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #14b8a6, #d946ef);
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  animation: pulse 2s infinite;
-  border: 2px solid #fff;
+  box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6);
+  animation: markerPulse 2s infinite;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  position: relative;
 }
 
-@keyframes pulse {
+.pulse-marker::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.3), transparent 70%);
+  animation: markerGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes markerPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6);
   }
-  70% {
-    box-shadow: 0 0 0 16px rgba(239, 68, 68, 0);
+  50% {
+    box-shadow: 0 0 0 14px rgba(139, 92, 246, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
   }
 }
 
-/* ── Global resets ────────────────────────────────────────────────── */
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #111827;
-  color: #fff;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+@keyframes markerGlow {
+  0%   { opacity: 0.3; }
+  100% { opacity: 0.8; }
+}
+
+/* ── SOS marker variant (critical) ────────────────────────────────── */
+.pulse-marker-critical {
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  animation: criticalPulse 1.2s infinite;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+}
+
+@keyframes criticalPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  50%  { box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* ── Glassmorphism cards ──────────────────────────────────────────── */
+.glass-card {
+  background: linear-gradient(
+    145deg,
+    rgba(20, 20, 48, 0.7),
+    rgba(10, 10, 26, 0.85)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 30, 63, 0.6);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.glass-card-hover {
+  transition: all 0.3s ease;
+}
+.glass-card-hover:hover {
+  border-color: rgba(20, 184, 166, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(20, 184, 166, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+/* ── Brand gradient text ──────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #2dd4bf, #22d3ee, #a78bfa, #e879f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Shimmer loading line ─────────────────────────────────────────── */
+.shimmer-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(20, 184, 166, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Animated gradient border ─────────────────────────────────────── */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #14b8a6, #06b6d4, #8b5cf6, #d946ef);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Packet feed card animation ───────────────────────────────────── */
+.packet-card {
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Status badge pulse ───────────────────────────────────────────── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-dot-active {
+  background: #2dd4bf;
+  box-shadow: 0 0 8px rgba(45, 212, 191, 0.6);
+}
+
+.status-dot-warning {
+  background: #fbbf24;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+}
+
+.status-dot-error {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* ── Map container visual polish ──────────────────────────────────── */
+.leaflet-container {
+  background: #060612 !important;
+}
+
+/* Override leaflet popup for brand */
+.leaflet-popup-content-wrapper {
+  background: linear-gradient(145deg, rgba(20, 20, 48, 0.95), rgba(10, 10, 26, 0.98)) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(30, 30, 63, 0.8) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(20, 184, 166, 0.15) !important;
+  color: #e2e8f0 !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(20, 20, 48, 0.95) !important;
+  border: 1px solid rgba(30, 30, 63, 0.8) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #2dd4bf !important;
+}
+
+/* ── Ambient background orbs ──────────────────────────────────────── */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite alternate;
+}
+
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20px, -15px) scale(1.1); }
+}
+
+/* ── Stat counter animation ───────────────────────────────────────── */
+.stat-value {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* ── Button glow effect ───────────────────────────────────────────── */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #14b8a6, #8b5cf6);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.btn-glow:hover::before {
+  opacity: 0.6;
+}
+
+.btn-glow:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3);
 }

@@ -64,6 +64,6 @@ npm run dev
 Simulate the moment an Android node holding 25 aggregated offline distress packets finds internet and dumps them. In a third terminal:
 ```bash
 cd backend
-python chaos_tester.py
+py chaos_tester.py
 ```
 *Watch the frontend instantly populate with staggered, pulsing red triage markers.*

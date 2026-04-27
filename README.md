@@ -44,11 +44,18 @@ We didn't just wrap an API; we engineered an entirely custom audio-telemetry sta
 Want to see the Command Center light up? Here is how to run the full stack locally.
 
 ### 1. Start the FastAPI Sync Backend
-Navigate to the `backend` directory, install dependencies, and launch Uvicorn:
+You aren't currently inside your virtual environment (I don't see (venv) in your prompt). Activating it usually fixes the path issues because it points the terminal directly to your local Python installation.The Virtual Environment Fix (Most Important)
 ```bash
-cd backend
-pip install -r requirements.txt
+.\venv\Scripts\activate
+```
+If this works, you will see (venv) appear on the left. Then try running your command again:
+```bash
 python -m uvicorn main:app --reload
+```
+2. The py Launcher Fix
+If you don't want to use the virtual environment right now, Windows comes with a "Python Launcher" called py. It is much better at finding Python than the standard python command. Try running this:
+```bash
+py -m uvicorn main:app --reload
 ```
 
 ### 2. Launch the React Dashboard
@@ -63,6 +70,7 @@ npm run dev
 ### 3. Trigger the Chaos Load Test
 Simulate the moment an Android node holding 25 aggregated offline distress packets finds internet and dumps them. In a third terminal:
 ```bash
+cd EchoNet-Triage
 cd backend
 py chaos_tester.py
 ```

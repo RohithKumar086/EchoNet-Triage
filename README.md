@@ -44,18 +44,10 @@ We didn't just wrap an API; we engineered an entirely custom audio-telemetry sta
 Want to see the Command Center light up? Here is how to run the full stack locally.
 
 ### 1. Start the FastAPI Sync Backend
-You aren't currently inside your virtual environment (I don't see (venv) in your prompt). Activating it usually fixes the path issues because it points the terminal directly to your local Python installation.The Virtual Environment Fix (Most Important)
+Navigate to the `backend` directory and start the server:
 ```bash
-.\venv\Scripts\activate
-```
-If this works, you will see (venv) appear on the left. Then try running your command again:
-```bash
+cd backend
 python -m uvicorn main:app --reload
-```
-2. The py Launcher Fix
-If you don't want to use the virtual environment right now, Windows comes with a "Python Launcher" called py. It is much better at finding Python than the standard python command. Try running this:
-```bash
-py -m uvicorn main:app --reload
 ```
 
 ### 2. Launch the React Dashboard
@@ -70,8 +62,15 @@ npm run dev
 ### 3. Trigger the Chaos Load Test
 Simulate the moment an Android node holding 25 aggregated offline distress packets finds internet and dumps them. In a third terminal:
 ```bash
-cd EchoNet-Triage
 cd backend
-py chaos_tester.py
+python chaos_tester.py
 ```
 *Watch the frontend instantly populate with staggered, pulsing red triage markers.*
+
+### 4. Acoustic Listening (Hardware Simulation)
+To test real-world acoustic detection using your laptop microphone (instead of the simulated chaos tester):
+```bash
+cd backend
+python listen_sos.py
+```
+*The listener continuously monitors the **17.5kHz – 19.5kHz** frequency band. Upon starting, it will prompt for your exact GPS coordinates (e.g. from Google Maps) so that detected signals appear correctly on the dashboard. If skipped, it defaults to approximate IP-based geolocation.*

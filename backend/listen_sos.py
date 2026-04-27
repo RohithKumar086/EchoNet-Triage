@@ -90,12 +90,25 @@ def analyze_audio(data: np.ndarray):
 # ═══════════════════════════════════════════════════════════════════════
 
 def get_current_location():
+    print("\n[?] Do you want to use your exact GPS coordinates for the dashboard?")
+    print("    If yes, enter them as 'lat,lng' (e.g., from Google Maps).")
+    print("    If no, just press Enter to use your approximate city location (via IP).")
+    
+    user_loc = input("\n> Exact Coordinates [Press Enter to skip]: ").strip()
+    if user_loc and "," in user_loc:
+        print(f"  Using precise location: {user_loc}")
+        return user_loc
+        
+    print("  Fetching approximate location via IP...")
     try:
         resp = requests.get("https://ipinfo.io/json", timeout=3)
         if resp.status_code == 200:
-            return resp.json().get("loc", "12.9716,77.5946")
+            loc = resp.json().get("loc", "12.9716,77.5946")
+            print(f"  Approximate location found: {loc}")
+            return loc
     except Exception:
         pass
+    print("  Offline. Using default location.")
     return "12.9716,77.5946" # Fallback to default if offline
 
 CURRENT_LOC = get_current_location()

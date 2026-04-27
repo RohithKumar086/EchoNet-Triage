@@ -14,8 +14,8 @@ CHUNK = 48000                   # 1-second window for better frequency resolutio
 API_URL = "http://localhost:8000/api/sync"
 
 # Detection band — the frequency range your transmitter uses
-FREQ_LOW  = 13500               # Hz
-FREQ_HIGH = 14500               # Hz
+FREQ_LOW  = 17500               # Hz
+FREQ_HIGH = 19500               # Hz
 
 # ── SNR-based detection ─────────────────────────────────────────────
 #  Instead of a raw magnitude threshold, we compare the PEAK in the
@@ -86,6 +86,21 @@ def analyze_audio(data: np.ndarray):
 
 
 # ═══════════════════════════════════════════════════════════════════════
+#  GEOLOCATION
+# ═══════════════════════════════════════════════════════════════════════
+
+def get_current_location():
+    try:
+        resp = requests.get("https://ipinfo.io/json", timeout=3)
+        if resp.status_code == 200:
+            return resp.json().get("loc", "12.9716,77.5946")
+    except Exception:
+        pass
+    return "12.9716,77.5946" # Fallback to default if offline
+
+CURRENT_LOC = get_current_location()
+
+# ═══════════════════════════════════════════════════════════════════════
 #  MAIN LOOP
 # ═══════════════════════════════════════════════════════════════════════
 
@@ -150,7 +165,7 @@ try:
                 "id": f"SOS_{uuid.uuid4().hex[:8]}",
                 "timestamp": int(time.time()),
                 "msg": "SOS!",
-                "loc": "12.9716,77.5946",
+                "loc": CURRENT_LOC,
                 "ttl": 3,
             }
 

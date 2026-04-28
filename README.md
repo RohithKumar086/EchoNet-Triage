@@ -96,7 +96,9 @@ python -m uvicorn main:app --reload
 
 ### 1. Start the FastAPI Sync Backend
 ```bash
+cd EchoNet-Triage
 cd backend
+.\venv\Scripts\activate
 pip install -r requirements.txt
 python -m uvicorn main:app --reload
 ```
@@ -115,7 +117,9 @@ Navigate to `http://localhost:5173` to see the dark-mode Tactical Map.
 
 ### 3. Start the Acoustic Listener
 ```bash
+cd EchoNet-Triage
 cd backend
+.\venv\Scripts\activate
 python listen_sos.py
 ```
 The listener walks you through:
@@ -133,7 +137,9 @@ The listener walks you through:
 
 **Option B — Another Laptop (strongest signal):**
 ```bash
+cd EchoNet-Triage
 cd backend
+.\venv\Scripts\activate
 python send_sos_tone.py           # plays 15kHz for 10s
 python send_sos_tone.py 10000     # plays 10kHz for 10s
 python send_sos_tone.py 10000 20  # plays 10kHz for 20s
@@ -176,7 +182,9 @@ All detection parameters are at the top of `backend/listen_sos.py`:
 
 **Mic not detecting anything?** Run the diagnostic:
 ```bash
+cd EchoNet-Triage
 cd backend
+.\venv\Scripts\activate
 python mic_diagnostic.py
 ```
 Play your tone while it runs — it shows the top 10 loudest frequencies your mic picks up, helping you determine what your speaker can actually produce.

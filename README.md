@@ -47,6 +47,7 @@ Want to see the Command Center light up? Here is how to run the full stack local
 Navigate to the `backend` directory and start the server:
 ```bash
 cd backend
+.\venv\Scripts\activate
 python -m uvicorn main:app --reload
 ```
 

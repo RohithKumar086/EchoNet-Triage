@@ -55,6 +55,7 @@ We didn't just wrap an API; we engineered an entirely custom audio-telemetry sta
 
 ## 📂 Project Structure
 
+<<<<<<< HEAD
 ```
 EchoNet-Triage/
 ├── android_node/          # Kotlin Android FSK client (AudioRecord/AudioTrack)
@@ -73,6 +74,16 @@ EchoNet-Triage/
     ├── fsk_encoder.py     # Text → FSK audio waveform → speaker
     ├── fsk_decoder.py     # Mic → Goertzel detection → decoded text
     └── loopback_test.py   # Encode + decode roundtrip validation
+=======
+Want to see the Command Center light up? Here is how to run the full stack locally.
+
+### 1. Start the FastAPI Sync Backend
+Navigate to the `backend` directory and start the server:
+```bash
+cd backend
+.\venv\Scripts\activate
+python -m uvicorn main:app --reload
+>>>>>>> 9684e72080aa8669ef566016336dd0a1730631e4
 ```
 
 ---
